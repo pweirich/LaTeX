@@ -1,0 +1,95 @@
+\ProvidesPackage{dissertationStyle}
+
+\usepackage{palatino,microtype}
+\usepackage{tipa}
+\usepackage{color}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage[all]{nowidow} % prevent widow and orphan lines
+
+\usepackage[section]{placeins} % makes all floats print before the end of a section
+
+\usepackage{url} % better linebreaks for urls
+\usepackage{multicol} % Multiple columns, use \begin{multicols}{2} \end{multicols}
+
+%\usepackage[pdftex]{graphicx}  % Can add ``draft'' option to this package to suppress images while still leaving an outline of the image; helpful for working on a draft.
+\usepackage{graphicx}
+\graphicspath{ {./Chapters/images/} }
+\usepackage{subfig}			% Includes multiple images in one float
+
+\usepackage{tablefootnote}  % include footnotes in table with \tablefootnote{...}
+
+\usepackage{setspace}
+\usepackage{afterpage} 
+
+\usepackage{enumitem}  % Use letters for enumeration with \begin{enumerate} [label=\alph*]
+
+\usepackage[table]{xcolor} % for adding colored rows to table
+\definecolor{light-gray}{gray}{0.8} % defines a specific shade of gray
+\usepackage{multirow} % allows dividing single rows into multiple rows in tables
+\usepackage{longtable} % lets table span multiple pages
+
+\usepackage[font=small,labelfont=bf]{caption}   % used to suppress numbering in figures and set some style parameters for captions
+
+% Define new command for thick hlines: \hlinewd{1pt}
+\makeatletter
+\def\hlinewd#1{%
+  \noalign{\ifnum0=`}\fi\hrule \@height #1 \futurelet
+   \reserved@a\@xhline}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{pdfpages} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Code to create contingency tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{booktabs}
+%\usepackage{pgfplots}
+%\usepackage{pgfplotstable}
+
+\newcommand{\createcontingencytable}[4]{ %
+% #1=table name
+% #2=first column name
+% #3=new row sum name
+% #4=new column sum name
+\pgfplotstablecreatecol[
+    create col/assign/.code={% In each row ... 
+        \def\rowsum{0}
+        \pgfmathtruncatemacro\maxcolindex{\pgfplotstablecols-1}
+        % ... loop over all columns, summing up the elements
+        \pgfplotsforeachungrouped \col in {1,...,\maxcolindex}{
+            \pgfmathsetmacro\rowsum{\rowsum+\thisrowno{\col}}
+        }
+        \pgfkeyslet{/pgfplots/table/create col/next content}\rowsum
+    }
+]{#3}{#1}%
+%
+% Transpose the table, so we can repeat the summation step for the columns
+\pgfplotstabletranspose[colnames from={#2},input colnames to={#2}]{\intermediatetable}{#1}
+%
+% Sums for each column
+\pgfplotstablecreatecol[
+    create col/assign/.code={%
+        \def\colsum{0}
+        \pgfmathtruncatemacro\maxcolindex{\pgfplotstablecols-1}
+        \pgfplotsforeachungrouped \col in {1,...,\maxcolindex}{
+            \pgfmathsetmacro\colsum{\colsum+\thisrowno{\col}}
+        }
+        \pgfkeyslet{/pgfplots/table/create col/next content}\colsum
+    }
+]{#4}\intermediatetable
+%
+% Transpose back to the original form
+\pgfplotstabletranspose[colnames from=#2, input colnames to=#2]{\contingencytable}{\intermediatetable}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{apacite}
+\newcommand{\possessivecite}[1]{\citeauthor{#1}'s \citeyear{#1}} % This adds the ability to use the possesive when citing (e.g. Preston's (1993) study found...)
+
+

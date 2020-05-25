@@ -1,0 +1,137 @@
+%%
+%% Indiana University Dissertation Template
+%%
+%% This is a LaTeX template for a dissertation that adheres to the 
+%% guidelines of the Indiana University Graduate School.
+%%
+%% It is mosly based on a template circulated by the Mathematics 
+%% Department. Some examples of how to structure and organize the 
+%% directories in a way that suits dissertations using additional figures
+%% have been added.
+%%
+%% Required files: 
+%% - MasterFile[Dissertation].tex (this file, the main file that loads all
+%%		all relevant files)
+%% - iuphd.cls (this file contains the definitions for basic global formatting. 
+%%		There is probably no reason to touch this file, but if you are having
+%%		trouble with the formatting, title page (or anything before the 
+%%		first chapter), appendices, etc., you might fix it here.)
+%% - dissertationBibliography.bib (the file that contains all of the references 
+%%		cited in the dissertation. You could divide the references into 
+%%		individual .bib files according to chapter, but this could cause
+%%		problems with references that occur in multiple chapters)
+%% - dissertationStyle.sty (this file takes the place of what would normally
+%%		appear in the preamble of a shorter document. If you need to 
+%%		modify or add any packages, do so here.)
+
+
+\documentclass[showabstract,showacknowledgments,showdedication]{iuphd} 
+
+\usepackage{dissertationStyle}
+
+% For title and abstract page
+
+\title{My Very Important Study}
+\author{Author McAuthorson}
+\date{November 2019} % Completion date of Dissertation
+\department{Linguistics} % Change this to your department
+
+% For acceptance and abstract page
+
+\committeechair{Kenneth de Jong, PhD}
+\readertwo{Julie Auger, PhD}
+\readerthree{Stuart Davis, PhD}
+\readerfour{Sharlene Newman, PhD}
+\readerfive{Dennis Preston, PhD}
+\defensedate{September 20, 2019} % Date of PhD defense
+
+% For Copyright Page
+\cryear{Year} % Copyright year
+
+\begin{document}
+\maketitle
+\acceptancepage
+
+% This page is optional
+%\copyrightpage
+
+
+% This page is optional but generally included
+
+\begin{acknowledgments}
+
+
+Here's where where you acknowledge people and institutions.
+You can write whatever you want, but it's somewhat standard to thank people in groups from most professional (your advisers, colleagues, research groups) to most personal (your friends and family). 
+Funding sources are almost always listed at the end.
+
+ 
+
+\end{acknowledgments}
+
+% This page is optional
+
+\begin{dedication}
+For those who are about to rock\\
+We salute you
+\end{dedication}
+
+% This page is optional
+
+%\begin{preface}
+%This is the (optional) preface page which can be used if you wish. This page should appear after the dedication (or acknowledgements page if there is no dedication page) and before the abstract page.
+%\end{preface}
+
+% % This page is required
+
+\begin{abstract}
+Here is where your abstract goes.
+The graduate school doesn't specify a strict page limit, but 250--300 words is typical.
+
+According to the Graduate School: ``As many people will learn about your work through your abstract published in the ProQuest Dissertations \& Theses Database, you should spend a good bit of effort in the composition of both the abstract and the title of your work. Try to convey the flavor of your work, not just the bare bones of your findings. You should also work to phrase your title so that it truly describes the contents and will be easily found in the index of the database. The index is based on key words, so be as specific as you can be about your subject.''
+
+\newpage
+
+\end{abstract}
+
+
+
+% This page is required
+
+\tableofcontents
+
+\input{./Chapters/1introduction.tex}
+
+\input{./Chapters/2methods.tex}
+
+\input{./Chapters/3analysis.tex}
+
+\input{./Chapters/4conclusion.tex}
+
+
+\newpage
+
+% \appendix command is necessary to change chapter numbering.
+% Appendices are optional
+
+\appendix
+
+\input{./Chapters/Appendix_WordlistAndReadingPassages.tex}
+
+\newpage
+%\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{apacite} % adds the bibliography
+\bibliography{dissertationBibliography} % name of .bib file
+
+
+
+% Adds a line for your CV without a page number
+\newpage
+
+\addtocontents{toc}{%
+ \protect\contentsline{chapter}{Curriculum Vitae}{}}
+
+\input{./Chapters/CV[Weirich].tex} 
+
+
+\end{document}
